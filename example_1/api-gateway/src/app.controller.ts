@@ -13,6 +13,10 @@ export class AppController {
 
   @Post()
   createUser(@Body() createUserdto: CreateUserDto) {
-    return this.appService.createUser(createUserdto);
+    this.appService.createUser(createUserdto);
+
+    return {
+      message: 'user_created',
+    };
   }
 }

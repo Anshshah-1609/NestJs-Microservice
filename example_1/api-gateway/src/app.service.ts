@@ -14,10 +14,10 @@ export class AppService {
   }
   createUser(createUserdto: CreateUserDto) {
     this.users.push(createUserdto);
+    console.log('Sent to service');
     this.communicationClient.emit(
       'user_created',
       new CreateUserEvent(createUserdto),
     );
-    console.log('Sent to service');
   }
 }
