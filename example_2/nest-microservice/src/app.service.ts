@@ -14,6 +14,8 @@ export class AppService {
   }
 
   getItemById(id) {
-    return id;
+    return {
+      message: `Item id: ${id}`,
+    };
   }
 }
