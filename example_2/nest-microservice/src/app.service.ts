@@ -10,7 +10,7 @@ export class AppService {
   createItem(id, itemDto) {
     // const item = new ItemEntity();
     console.log(itemDto, id);
-    return { ...itemDto };
+    return 'hello';
     // return this.itemRepository.save(item);
   }
 
@@ -18,6 +18,15 @@ export class AppService {
     console.log(`Item id: ${id}`);
     return {
       message: `Item id: ${id}`,
+    };
+  }
+
+  demo(isValid, id) {
+    console.log(isValid, ' ', id);
+
+    return {
+      isValid,
+      id,
     };
   }
 }
