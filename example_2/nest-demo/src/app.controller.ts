@@ -19,4 +19,9 @@ export class AppController {
   getById(@Param('id') id: number) {
     return this.appService.getItemById(id);
   }
+
+  @Post('demo/:id')
+  demo(@Body('isValid') isValid: string, @Param('id') id: number) {
+    return this.appService.demo(isValid, id);
+  }
 }

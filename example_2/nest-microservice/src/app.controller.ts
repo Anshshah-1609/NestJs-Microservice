@@ -2,7 +2,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
-import { CREATE_ITEM, GET_ITEM_BY_ID } from './tcp.constant';
+import { CREATE_ITEM, DEMO_ENDPOINT, GET_ITEM_BY_ID } from './tcp.constant';
 
 @Controller()
 export class AppController {
@@ -27,12 +27,21 @@ export class AppController {
   }
 
   @MessagePattern(GET_ITEM_BY_ID)
-  @Get('/item/:id')
-  getItemById(@Param('id') id: number, @Body() payload) {
-    if (!id) {
-      return this.appService.getItemById(payload);
+  @Get('item/:id')
+  getItemById(@Param('id') itemId: number, @Body() payload: any) {
+    if (!itemId) {
+      return this.appService.getItemById(payload.id);
     }
 
-    return this.appService.getItemById(id);
+    return this.appService.getItemById(itemId);
+  }
+
+  @MessagePattern(DEMO_ENDPOINT)
+  @Post('demo/:id')
+  demo(@Param('id') id: number, @Body() payload: any) {
+    if (!id) {
+      return this.appService.demo(payload.isValid, payload.id);
+    }
+    return this.appService.demo(payload.isValid, id);
   }
 }
