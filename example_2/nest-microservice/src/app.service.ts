@@ -7,10 +7,12 @@ export class AppService {
     return 'Hello World!';
   }
 
-  createItem(id, itemDto) {
+  createItem(id, payload) {
     // const item = new ItemEntity();
-    console.log(itemDto, id);
-    return 'hello';
+    console.log(payload, '& Id: ', id);
+    return {
+      message: 'Item created!',
+    };
     // return this.itemRepository.save(item);
   }
 

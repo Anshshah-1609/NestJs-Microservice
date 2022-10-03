@@ -18,7 +18,7 @@ export class AppController {
   createItem(@Param('id') id: number, @Body() payload) {
     if (!id) {
       console.log('Id not found');
-      return this.appService.createItem(payload.id, payload);
+      return this.appService.createItem(payload.id, payload.createItemDto);
     }
 
     console.log('payloadbreb', id, payload);
