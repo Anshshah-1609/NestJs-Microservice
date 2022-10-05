@@ -31,4 +31,12 @@ export class AppService {
       id,
     };
   }
+
+  test(dto) {
+    console.log('dto :', dto);
+
+    return {
+      message: 'success',
+    };
+  }
 }

@@ -3,7 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 
-import { CREATE_ITEM, DEMO_ENDPOINT, GET_ITEM_BY_ID } from './tcp.constant';
+import {
+  CREATE_ITEM,
+  DEMO_ENDPOINT,
+  GET_FILE,
+  GET_ITEM_BY_ID,
+  TEST_ENDPOINT,
+} from './tcp.constant';
 
 @Injectable()
 export class AppService {
@@ -26,7 +32,7 @@ export class AppService {
   }
 
   async getItemById(id: number) {
-    const response = this.client.send(GET_ITEM_BY_ID, id).pipe();
+    const response = this.client.send(GET_ITEM_BY_ID, { id }).pipe();
     const getItem = await lastValueFrom(response);
     console.log('getItem', getItem);
 
@@ -40,9 +46,20 @@ export class AppService {
         id,
       })
       .pipe();
-    const demo = await lastValueFrom(response);
-    console.log('demo', demo);
+    return lastValueFrom(response);
+  }
 
-    return demo;
+  async test(dto: { name: string; age: number }) {
+    const response = this.client.send(TEST_ENDPOINT, dto).pipe();
+
+    return lastValueFrom(response);
+  }
+
+  async getFile() {
+    const response = this.client.send(GET_FILE, {}).pipe();
+    const data = await lastValueFrom(response);
+    console.log('DATA -----------', data);
+
+    return `${data}`;
   }
 }

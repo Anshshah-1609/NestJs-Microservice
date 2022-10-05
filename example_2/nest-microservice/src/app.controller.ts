@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
-import { CREATE_ITEM, DEMO_ENDPOINT, GET_ITEM_BY_ID } from './tcp.constant';
+import {
+  CREATE_ITEM,
+  DEMO_ENDPOINT,
+  GET_FILE,
+  GET_ITEM_BY_ID,
+  TEST_ENDPOINT,
+} from './tcp.constant';
 
 @Controller()
 export class AppController {
@@ -30,6 +36,7 @@ export class AppController {
   @Get('item/:id')
   getItemById(@Param('id') itemId: number, @Body() payload: any) {
     if (!itemId) {
+      console.log('Item id from MessagePattern : ', payload.id);
       return this.appService.getItemById(payload.id);
     }
 
@@ -43,5 +50,16 @@ export class AppController {
       return this.appService.demo(payload.isValid, payload.id);
     }
     return this.appService.demo(payload.isValid, id);
+  }
+
+  @MessagePattern(TEST_ENDPOINT)
+  @Post('test')
+  test(@Body() dto) {
+    return this.appService.test(dto);
+  }
+
+  @MessagePattern(GET_FILE)
+  getFile() {
+    return '111/logo.png';
   }
 }

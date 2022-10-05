@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -23,5 +23,17 @@ export class AppController {
   @Post('demo/:id')
   demo(@Body('isValid') isValid: string, @Param('id') id: number) {
     return this.appService.demo(isValid, id);
+  }
+
+  @Post('test')
+  test(@Body() dto: { name: string; age: number }) {
+    return this.appService.test(dto);
+  }
+
+  @Get('get-file')
+  async getFile(@Res() res) {
+    const path = await this.appService.getFile();
+    res.sendFile(path, { root: 'storage' });
+    // console.log(res);
   }
 }
